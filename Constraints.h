@@ -71,7 +71,7 @@ namespace GCS
     {
     protected:
         VEC_pD origpvec; // is used only as a reference for redirecting and reverting pvec
-        VEC_pD pvec;
+        VEC_pD pvec; //vector of pointers to double values which are parameters
         double scale;
         int tag;
     public:
@@ -91,6 +91,7 @@ namespace GCS
         virtual double grad(double *);
         // virtual void grad(MAP_pD_D &deriv);  --> TODO: vectorized grad version
         virtual double maxStep(MAP_pD_D &dir, double lim=1.);
+		double DoSelfTest(int &iworst_param);//tests if partial derivatives in grad() compare well to numeric ones. Returns the fraction of fails of the worst derivative (if >~0.05 - we have a problem).
     };
 
     // Equal
