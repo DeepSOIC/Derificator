@@ -98,7 +98,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	int i;
 	double testresult;
 
-	Line li; Ellipse el; Point po; Arc ar; Circle ci; //a bunch of useless geometrical objects to make constraints' constructors happy =)
+	Line li; Ellipse el; Point po; Arc ar; Circle ci; ArcOfEllipse ae; //a bunch of useless geometrical objects to make constraints' constructors happy =)
 	double foo=0.2; double* dp=&foo;
 	po.x=dp;
 	po.y=dp;
@@ -131,6 +131,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	GENERATE_CONSTRAINT_TEST_HERE(ConstraintInternalAlignmentPoint2Ellipse,(el,po,EllipsePositiveMajorX));
 
 	GENERATE_CONSTRAINT_TEST_HERE(ConstraintEqualMajorAxesEllipse,(el,el));
+	GENERATE_CONSTRAINT_TEST_HERE(ConstraintEllipticalArcRangeToEndPoints,(po,ae,dp));
 
 	cin.get();
 	return 0;

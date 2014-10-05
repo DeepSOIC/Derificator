@@ -51,7 +51,8 @@ namespace GCS
         TangentEllipseLine = 14,
         Point2EllipseDistance = 15,
         InternalAlignmentPoint2Ellipse = 16,
-        EqualMajorAxesEllipse = 17
+        EqualMajorAxesEllipse = 17,
+        EllipticalArcRangeToEndPoints = 18
     };
     
     enum InternalAlignmentType {
@@ -337,6 +338,7 @@ namespace GCS
         inline double* rmin() { return pvec[6]; }
     public:
         ConstraintPointOnEllipse(Point &p, Ellipse &e);
+        ConstraintPointOnEllipse(Point &p, ArcOfEllipse &a);
         virtual ConstraintType getTypeId();
         virtual void rescale(double coef=1.);
         virtual double error();
@@ -357,6 +359,7 @@ namespace GCS
         inline double* rmin() { return pvec[8]; }
     public:
         ConstraintEllipseTangentLine(Line &l, Ellipse &e);
+        ConstraintEllipseTangentLine(Line &l, ArcOfEllipse &a);
         virtual ConstraintType getTypeId();
         virtual void rescale(double coef=1.);
         virtual double error();
@@ -375,6 +378,7 @@ namespace GCS
         inline double* rmin() { return pvec[6]; }
     public:
         ConstraintInternalAlignmentPoint2Ellipse(Ellipse &e, Point &p1, InternalAlignmentType alignmentType);
+        ConstraintInternalAlignmentPoint2Ellipse(ArcOfEllipse &e, Point &p1, InternalAlignmentType alignmentType);
         virtual ConstraintType getTypeId();
         virtual void rescale(double coef=1.);
         virtual double error();
@@ -404,6 +408,26 @@ namespace GCS
         virtual double grad(double *);
     };
     
+    // EllipticalArcRangeToEndPoints
+    class ConstraintEllipticalArcRangeToEndPoints : public Constraint
+    {
+    private:
+        inline double* p1x() { return pvec[0]; }
+        inline double* p1y() { return pvec[1]; }
+        inline double* angle() { return pvec[2]; }
+        inline double* cx() { return pvec[3]; }
+        inline double* cy() { return pvec[4]; }
+        inline double* f1x() { return pvec[5]; }
+        inline double* f1y() { return pvec[6]; }
+        inline double* rmin() { return pvec[7]; }
+    public:
+        ConstraintEllipticalArcRangeToEndPoints(Point &p, ArcOfEllipse &a, double *angle_t);
+        virtual ConstraintType getTypeId();
+        virtual void rescale(double coef=1.);
+        virtual double error();
+        virtual double grad(double *);
+        virtual double maxStep(MAP_pD_D &dir, double lim=1.);
+    };
     
 
 } //namespace GCS
