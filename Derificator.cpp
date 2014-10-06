@@ -88,6 +88,7 @@ double Constraint::DoSelfTest(int &iworst_param)
 
 #define GENERATE_CONSTRAINT_TEST_HERE(constraint_classname, constructor_arguments) { \
 	constraint_classname cstr constructor_arguments; \
+	cstr.rescale(0.75); \
 	testresult=cstr.DoSelfTest(i); \
 	cout << #constraint_classname << " derivative test results: worst result by parameter "<<i<<" failing " << testresult*100.0 << "% of tests.\n"; \
 	};
@@ -128,7 +129,9 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	GENERATE_CONSTRAINT_TEST_HERE(ConstraintPointOnEllipse,(po,el));
 	GENERATE_CONSTRAINT_TEST_HERE(ConstraintEllipseTangentLine,(li,el));
-	GENERATE_CONSTRAINT_TEST_HERE(ConstraintInternalAlignmentPoint2Ellipse,(el,po,EllipsePositiveMajorX));
+	for( int iiat=0;iiat<=9;iiat++){
+		GENERATE_CONSTRAINT_TEST_HERE(ConstraintInternalAlignmentPoint2Ellipse,(el,po,(GCS::InternalAlignmentType)iiat));
+	};
 
 	GENERATE_CONSTRAINT_TEST_HERE(ConstraintEqualMajorAxesEllipse,(el,el));
 	GENERATE_CONSTRAINT_TEST_HERE(ConstraintEllipticalArcRangeToEndPoints,(po,ae,dp));
